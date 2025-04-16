@@ -4,16 +4,17 @@ import application.application.DTO.CategoryDTO;
 import application.application.mapper.CategoryMapper;
 import application.application.model.Category;
 import application.application.repository.CategoryRepository;
-import application.application.service.interfaces.ICategoryService;
+import application.application.service.ICategoryService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @AllArgsConstructor
-public class CategoryService implements ICategoryService {
+public class CategoryServiceImpl implements ICategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
@@ -25,6 +26,27 @@ public class CategoryService implements ICategoryService {
                 .build();
         return categoryRepository.save(newCategory);
     }
+
+    @Override
+    public Category addCategory(Category category) {
+        if (categoryRepository.findByName(category.getName()) != null)
+            throw new RuntimeException("Category already exists");
+        return categoryRepository.save(category);
+    }
+
+    @Override
+    public List<Category> addCategoryList(List<Category> categories) {
+        categories.forEach(category -> {
+            addCategory(category);
+        });
+        return categories;
+    }
+
+    @Override
+    public List<Category> addCategories(List<String> categoryNames) {
+        return categoryNames.stream().map(categoryName -> addCategory(categoryName)).toList();
+    }
+
 
     @Override
     public List<Category> getAllCategories() {

@@ -6,15 +6,17 @@ import application.application.model.Category;
 import application.application.model.Product;
 import application.application.repository.CategoryRepository;
 import application.application.repository.ProductRepository;
-import application.application.service.interfaces.IProductService;
+import application.application.service.IProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 @AllArgsConstructor
-public class ProductService implements IProductService {
+public class ProductServiceImpl implements IProductService {
 
     private ProductRepository productRepository;
     private CategoryRepository categoryRepository;

@@ -1,7 +1,7 @@
 package application.application.controller;
 
 import application.application.DTO.CategoryDTO;
-import application.application.service.implementation.CategoryService;
+import application.application.service.ICategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/category")
 @AllArgsConstructor
 public class CategoryController {
-    CategoryService categoryService;
+    private ICategoryService categoryService;
 
     @GetMapping
     public List<CategoryDTO> getAllCategories() {

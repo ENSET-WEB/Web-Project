@@ -16,6 +16,7 @@ public class Product {
     private String description;
     private double price;
     private String imageUrl;
+
     @ManyToOne
     private Category category;
 }

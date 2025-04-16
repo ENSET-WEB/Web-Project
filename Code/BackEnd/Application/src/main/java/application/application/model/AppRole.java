@@ -1,5 +1,6 @@
 package application.application.model;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,11 +9,8 @@ import lombok.Data;
 
 @Entity
 @Data
-public class User {
+public class AppRole {
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private String name;
-    private String password;
-    private String email;
+    private String roleName;
 }
-

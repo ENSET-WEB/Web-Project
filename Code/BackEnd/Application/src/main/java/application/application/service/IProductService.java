@@ -1,10 +1,12 @@
-package application.application.service.interfaces;
+package application.application.service;
 
 import application.application.DTO.ProductDTO;
 import application.application.model.Product;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface IProductService {
     List<Product> getAllProducts();
     List<ProductDTO> getAllProductsDTO();

@@ -1,7 +1,7 @@
 package application.application.controller;
 
 import application.application.DTO.ProductDTO;
-import application.application.service.implementation.ProductService;
+import application.application.service.IProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductController {
 
-    ProductService productService;
+    private IProductService productService;
 
     @GetMapping
     public List<ProductDTO> getAllProducts() {
