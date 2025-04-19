@@ -1,5 +1,6 @@
 package application.application.service;
 
+import application.application.DTO.CartDTO;
 import application.application.model.AppUser;
 import application.application.model.Cart;
 import application.application.model.CartItem;
@@ -11,6 +12,10 @@ public interface ICartService {
     CartItem addProductToCart(Cart cart, Product product);
     Cart getCartByAppUserName(String appUserName);
     Cart getCartByAppUser(AppUser appUser);
-//    AppUser addProductToUser(AppUser user, Product product);
-//    Cart addProductToCart(Cart cart, Product product);
+
+    Cart getCartByAppUserId(String appUserId);
+
+    CartDTO getCartDTOByAppUser(AppUser appUser);
+
+    CartDTO getCartDTOByAppUserId(String appUserId);
 }

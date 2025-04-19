@@ -34,14 +34,7 @@ public class Application {
             ICartService cartService,
             ICartItemService cartItemService
     ) {
-        return args -> {
-
-//            List<Product> productList = productRepository.findByNameContaining("A");
-//            AppUser appUser = appUserService.getAppUserByName("David Bowie");
-//
-//            cartService.addProductToAppUserCart(appUser, productList.get(1), 4);
-
-        };
+        return args -> {};
     }
 
     //         @Bean

@@ -1,5 +1,7 @@
 package application.application.service.implementation;
 
+import application.application.DTO.AppUserDTO;
+import application.application.mapper.AppUserMapper;
 import application.application.model.AppRole;
 import application.application.model.AppUser;
 import application.application.model.Cart;
@@ -20,10 +22,12 @@ public class AppUserServiceImpl implements IAppUserService {
     private AppRoleRepository appRoleRepository;
     private CartRepository cartRepository;
 
-//    Add Exception later
+    //    Add Exception later
     @Override
     public AppUser getAppUserByName(String appUserName) {
-        return appUserRepository.findByName(appUserName);
+        AppUser appUser = appUserRepository.findByName(appUserName);
+        if (appUser == null) throw new RuntimeException("User not found");
+        return appUser;
     }
 
     @Override
@@ -32,8 +36,23 @@ public class AppUserServiceImpl implements IAppUserService {
     }
 
     @Override
+    public AppUserDTO getAppUserDTOById(String appUserId) {
+        return AppUserMapper.appUserToDTO(getAppUserById(appUserId));
+    }
+
+    @Override
+    public AppUserDTO getAppUserDTOByName(String appUserName) {
+        return AppUserMapper.appUserToDTO(getAppUserByName(appUserName));
+    }
+
+    @Override
     public List<AppUser> getAllAppUsers() {
         return appUserRepository.findAll();
+    }
+
+    @Override
+    public List<AppUserDTO> getAppAppUsersDTO() {
+        return AppUserMapper.appUserListToAppUserDTOList(getAllAppUsers());
     }
 
     @Override

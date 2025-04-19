@@ -1,5 +1,7 @@
 package application.application.service.implementation;
 
+import application.application.DTO.CartDTO;
+import application.application.mapper.CartMapper;
 import application.application.model.AppUser;
 import application.application.model.Cart;
 import application.application.model.CartItem;
@@ -11,6 +13,8 @@ import application.application.repository.ProductRepository;
 import application.application.service.ICartService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -63,6 +67,24 @@ public class CartServiceImpl implements ICartService {
     @Override
     public Cart getCartByAppUser(AppUser appUser) {
         return cartRepository.findByAppUserName(appUser.getName());
+    }
+
+    @Override
+    public Cart getCartByAppUserId(String appUserId) {
+        return cartRepository.findByAppUserName(appUserId);
+    }
+
+    @Override
+    public CartDTO getCartDTOByAppUser(AppUser appUser) {
+        Cart cart = cartRepository.findByAppUser_Id(appUser.getId());
+        List<CartItem> cartItemList = cartItemRepository.getCartItemsByCart_AppUser_Id(appUser.getId());
+        return CartMapper.cartToDTO(cart, cartItemList);
+    }
+
+    @Override
+    public CartDTO getCartDTOByAppUserId(String appUserId) {
+        AppUser appUser = appUserRepository.findById(appUserId).orElseThrow(() -> new RuntimeException("User Not Found"));
+        return getCartDTOByAppUser(appUser);
     }
 
 }
