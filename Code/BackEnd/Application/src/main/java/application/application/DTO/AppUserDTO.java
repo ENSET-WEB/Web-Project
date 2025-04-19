@@ -19,7 +19,7 @@ public class AppUserDTO {
     private String name;
     private String password;
     private String email;
-    private List<AppRole> appRole = new ArrayList<>();
+//    private List<AppRole> appRole = new ArrayList<>();
 }
 
 

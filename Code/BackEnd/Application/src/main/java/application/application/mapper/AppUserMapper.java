@@ -17,11 +17,21 @@ public class AppUserMapper {
                 .email(appUser.getEmail())
 //                Test purpose, deleter it later
                 .password(appUser.getPassword())
-                .appRole(appUser.getAppRole())
+//                Useless
+//                .appRole(appUser.getAppRole())
                 .build();
     }
-
+    public static AppUser DTOToAppUser(AppUserDTO appUserDTO) {
+        return AppUser.builder()
+                .id(appUserDTO.getId())
+                .name(appUserDTO.getName())
+                .password(appUserDTO.getPassword())
+                .email(appUserDTO.getEmail())
+                .build();
+    }
     public static List<AppUserDTO> appUserListToAppUserDTOList(List<AppUser> appUserList) {
         return appUserList.stream().map(AppUserMapper::appUserToDTO).collect(Collectors.toList());
     }
+
+
 }

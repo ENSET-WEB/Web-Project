@@ -56,22 +56,26 @@ public class AppUserServiceImpl implements IAppUserService {
     }
 
     @Override
-    public AppUser addAppUser(String name, String password, String email, List<String> roleList) {
-        if (appUserRepository.findByName(name) != null) throw new RuntimeException("The user is already signed");
+    public AppUserDTO addNewAppUserByCredentials(String name, String password, String email) {
+        if (appUserRepository.findByName(name) != null) throw new RuntimeException("User already exist");
 
 //        Important: Add Password encryption
         AppUser appUser = AppUser.builder().name(name).password(password).email(email).build();
 
 //        Warning: Later check the existence of the roles before adding them to User
-        List<AppRole> appUserRoleList = appUser.getAppRole();
-        roleList.forEach(roleName -> appUserRoleList.add(appRoleRepository.findByRoleName(roleName)));
-        appUser.setAppRole(appUserRoleList);
+        AppRole userRole = appRoleRepository.findByRoleName("USER");
+        appUser.getAppRole().add(userRole);
 
         AppUser savedAppUser = appUserRepository.save(appUser);
 
         Cart cart = Cart.builder().appUser(savedAppUser).build();
         cartRepository.save(cart);
 
-        return savedAppUser;
+        return AppUserMapper.appUserToDTO(savedAppUser);
+    }
+
+    @Override
+    public AppUserDTO addNewAppUserByDTO(AppUserDTO appUserDTO){
+     return addNewAppUserByCredentials(appUserDTO.getName(), appUserDTO.getPassword(), appUserDTO.getEmail());
     }
 }

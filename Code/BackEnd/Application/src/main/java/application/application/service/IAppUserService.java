@@ -12,5 +12,7 @@ public interface IAppUserService {
     AppUserDTO getAppUserDTOByName(String appUserName);
     List<AppUser> getAllAppUsers();
     List<AppUserDTO> getAppAppUsersDTO();
-    AppUser addAppUser(String name, String password, String email, List<String> roleList);
+    AppUserDTO addNewAppUserByCredentials(String name, String password, String email);
+
+    AppUserDTO addNewAppUserByDTO(AppUserDTO appUserDTO);
 }

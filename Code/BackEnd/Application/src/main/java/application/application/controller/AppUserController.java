@@ -1,13 +1,12 @@
 package application.application.controller;
 
 import application.application.DTO.AppUserDTO;
-import application.application.model.AppUser;
 import application.application.service.IAppUserService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +24,12 @@ public class AppUserController {
     @GetMapping("/{id}")
     AppUserDTO getAppUserById(@PathVariable String id) {
         return appUserService.getAppUserDTOById(id);
+    }
+
+
+    @PostMapping("/add")
+    ResponseEntity<AppUserDTO> createAppUser(@RequestBody AppUserDTO appUserDTO) {
+        AppUserDTO createdAppUserDTO = appUserService.addNewAppUserByDTO(appUserDTO);
+        return new ResponseEntity<>(createdAppUserDTO, HttpStatus.CREATED);
     }
 }

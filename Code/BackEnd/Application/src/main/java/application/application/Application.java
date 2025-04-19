@@ -1,7 +1,5 @@
 package application.application;
 
-
-import application.application.model.*;
 import application.application.repository.*;
 import application.application.samples.CategorySamples;
 import application.application.samples.ProductSamples;
@@ -12,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 
@@ -32,16 +31,18 @@ public class Application {
             ProductRepository productRepository,
             IAppUserService appUserService,
             ICartService cartService,
-            ICartItemService cartItemService
-    ) {
-        return args -> {};
+            ICartItemService cartItemService,
+            BCryptPasswordEncoder passwordEncoder) {
+        return args -> {
+
+        };
     }
 
     //         @Bean
     CommandLineRunner AddSampleData(CategorySamples categorySamples, ProductSamples productSamples) {
         return args -> {
-            categorySamples.addSamples();
-            productSamples.addSamples();
+//            categorySamples.addSamples();
+//            productSamples.addSamples();
 
         };
     }
