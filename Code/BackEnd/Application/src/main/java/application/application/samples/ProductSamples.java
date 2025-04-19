@@ -1,11 +1,20 @@
 package application.application.samples;
 
 import application.application.model.Product;
+import application.application.service.IProductService;
+import application.application.service.implementation.ProductServiceImpl;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
+@AllArgsConstructor
 public class ProductSamples {
+
+    IProductService productService;
+
     static public List<Product> returnGuitars() {
         List<Product> products = new ArrayList<>();
         products.add(Product.builder()
@@ -145,12 +154,28 @@ public class ProductSamples {
                 .build());
         return products;
     }
+
+    public void addSamples() {
+        ProductSamples.returnBasses().forEach(bass -> {
+            productService.addProduct(bass, "Bass");
+        });
+        ProductSamples.returnDrums().forEach(drums -> {
+            productService.addProduct(drums, "Drums");
+        });
+        ProductSamples.returnGuitars().forEach(guitar -> {
+            productService.addProduct(guitar, "Guitar");
+        });
+        ProductSamples.returnKeys().forEach(keys -> {
+            productService.addProduct(keys, "Keys");
+        });
+    }
+
 }
 
 /*
 List<Product> guitars = ProductSamples.returnGuitars();
 List<Product> drums = ProductSamples.returnDrums();
-List<Product> basses = ProductSamples.returnBasses();
+List<Product> basses = ProductSamples.returnBass();
 List<Product> keys = ProductSamples.returnKeys();
 
             guitars.forEach(product -> {

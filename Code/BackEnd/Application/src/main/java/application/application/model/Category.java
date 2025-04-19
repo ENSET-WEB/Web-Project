@@ -17,7 +17,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
-    @OneToMany(mappedBy = "category")
-    @Builder.Default
-    private List<Product> productList = new ArrayList<>();
+//    @OneToMany(mappedBy = "category")
+//    @Builder.Default
+//    private List<Product> productList = new ArrayList<>();
 }

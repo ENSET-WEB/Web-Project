@@ -24,7 +24,7 @@ public class AppUser {
     @ManyToMany(fetch = FetchType.EAGER)
     @Builder.Default
     private List<AppRole> appRole = new ArrayList<>();
-    @OneToOne(mappedBy = "appUser")
-    private Cart cart;
+//    @OneToOne(mappedBy = "appUser")
+//    private Cart cart;
 }
 

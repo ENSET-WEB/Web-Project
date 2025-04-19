@@ -19,8 +19,8 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    @OneToMany(mappedBy = "cart")
-    private List<CartItem> cartItems = new ArrayList<>();
+//    @OneToMany(mappedBy = "cart")
+//    private List<CartItem> cartItems = new ArrayList<>();
     @OneToOne
     private AppUser appUser;
 

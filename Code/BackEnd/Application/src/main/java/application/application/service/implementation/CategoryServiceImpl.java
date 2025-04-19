@@ -35,16 +35,14 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public List<Category> addCategoryList(List<Category> categories) {
-        categories.forEach(category -> {
-            addCategory(category);
-        });
+    public List<Category> addCategoriesbyCategoryList(List<Category> categories) {
+        categories.forEach(this::addCategory);
         return categories;
     }
 
     @Override
-    public List<Category> addCategories(List<String> categoryNames) {
-        return categoryNames.stream().map(categoryName -> addCategory(categoryName)).toList();
+    public List<Category> addCategoriesbyNameList(List<String> categoryNames) {
+        return categoryNames.stream().map(this::addCategory).toList();
     }
 
 
