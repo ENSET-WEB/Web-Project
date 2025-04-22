@@ -1,10 +1,9 @@
 package application.application.service;
 
+import application.application.DTO.CartItemDTO;
 import application.application.model.AppUser;
 import application.application.model.Cart;
 import application.application.model.CartItem;
-import application.application.model.Product;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -17,4 +16,14 @@ public interface ICartItemService {
     List<CartItem> getCartItemListByCart(Cart cart);
 
     List<CartItem> getCartItemListByCartId(String cartId);
+
+//    CartItem deleteCartItemByCartItem(CartItem cartItem);
+
+    CartItemDTO deleteCartItemById(String cartItemId);
+
+//    CartItem updateCartItem(CartItem cartItem);
+
+    CartItem updateCartItem(CartItemDTO cartItemDTO);
+
+    List<CartItem> getAllCartItems();
 }

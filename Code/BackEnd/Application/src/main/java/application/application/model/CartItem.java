@@ -15,7 +15,7 @@ public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    @OneToOne
+    @ManyToOne
     private Product product;
     private int quantity;
     @ManyToOne

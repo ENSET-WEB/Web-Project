@@ -3,6 +3,8 @@ package application.application.controller;
 import application.application.DTO.CategoryDTO;
 import application.application.service.ICategoryService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +19,14 @@ public class CategoryController {
     private ICategoryService categoryService;
 
     @GetMapping
-    public List<CategoryDTO> getAllCategories() {
-        return categoryService.getAllCategoriesDTO();
+    public ResponseEntity<List<CategoryDTO>> getAllCategories() {
+        List<CategoryDTO> categories = categoryService.getAllCategoriesDTO();
+        return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public CategoryDTO getCategoryById(@PathVariable String id) {
-        return categoryService.getCategoryDTOById(id);
+    public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable String id) {
+        CategoryDTO category = categoryService.getCategoryDTOById(id);
+        return new ResponseEntity<>(category, HttpStatus.OK);
     }
 }

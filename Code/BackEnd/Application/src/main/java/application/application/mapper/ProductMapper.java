@@ -3,12 +3,17 @@ package application.application.mapper;
 
 import application.application.DTO.ProductDTO;
 import application.application.model.Product;
+import application.application.repository.ProductRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class ProductMapper {
+    private ProductRepository productRepository;
+
     static public ProductDTO productToDTO(Product product) {
         return ProductDTO.builder()
                 .id(product.getId())
@@ -23,5 +28,9 @@ public class ProductMapper {
     static public List<ProductDTO> productListToDTOList(List<Product> productList) {
         return productList.stream()
                 .map(ProductMapper::productToDTO).toList();
+    }
+
+     public Product dtoToProduct(ProductDTO productDTO) {
+        return productRepository.getById(productDTO.getId());
     }
 }

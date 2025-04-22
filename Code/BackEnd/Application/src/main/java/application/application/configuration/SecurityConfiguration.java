@@ -3,7 +3,6 @@ package application.application.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,15 +17,19 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .formLogin(Customizer.withDefaults())
+                .formLogin(form -> {
+//                    form.defaultSuccessUrl(/)
+                })
 
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/product").authenticated()
-                        .requestMatchers("/appUser/**").authenticated())
+                .authorizeHttpRequests(auth ->
+                                auth.anyRequest().permitAll()
+                        )
 
+                .csrf(csrf -> csrf.disable())
                 .build();
     }
 }
