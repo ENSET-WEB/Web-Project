@@ -18,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductServiceImpl implements IProductService {
 
+    private final ProductMapper productMapper;
     private ProductRepository productRepository;
     private CategoryRepository categoryRepository;
 
@@ -28,7 +29,7 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public List<ProductDTO> getAllProductsDTO() {
-        return ProductMapper.productListToDTOList(productRepository.findAll());
+        return productMapper.productListToDTOList(productRepository.findAll());
     }
 
 
@@ -65,6 +66,23 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public ProductDTO getProductDTOById(String id) {
-        return ProductMapper.productToDTO(getProductById(id));
+        return productMapper.productToDTO(getProductById(id));
+    }
+
+    @Override
+    public ProductDTO addProduct(ProductDTO productDTO) {
+        return productMapper.productToDTO(addProduct(
+                productDTO.getName(),
+                productDTO.getDescription(),
+                productDTO.getPrice(),
+                productDTO.getImageUrl(),
+                productDTO.getCategoryName()));
+    }
+
+    @Override
+    public ProductDTO deleteProductById(String productId) {
+        Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
+        productRepository.delete(product);
+        return productMapper.productToDTO(product);
     }
 }

@@ -13,5 +13,7 @@ public interface IProductService {
     Product addProduct(Product noCategoryProduct, String categoryName);
     Product getProductById(String id);
     ProductDTO getProductDTOById(String id);
+    ProductDTO addProduct(ProductDTO productDTO);
 
+    ProductDTO deleteProductById(String productId);
 }

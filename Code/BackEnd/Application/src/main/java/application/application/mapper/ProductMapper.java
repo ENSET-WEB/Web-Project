@@ -14,7 +14,7 @@ import java.util.List;
 public class ProductMapper {
     private ProductRepository productRepository;
 
-    static public ProductDTO productToDTO(Product product) {
+    public ProductDTO productToDTO(Product product) {
         return ProductDTO.builder()
                 .id(product.getId())
                 .name(product.getName())
@@ -25,9 +25,9 @@ public class ProductMapper {
                 .build();
     }
 
-    static public List<ProductDTO> productListToDTOList(List<Product> productList) {
+    public List<ProductDTO> productListToDTOList(List<Product> productList) {
         return productList.stream()
-                .map(ProductMapper::productToDTO).toList();
+                .map(this::productToDTO).toList();
     }
 
      public Product dtoToProduct(ProductDTO productDTO) {

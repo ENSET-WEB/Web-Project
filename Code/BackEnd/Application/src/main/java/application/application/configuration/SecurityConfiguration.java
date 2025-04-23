@@ -1,6 +1,7 @@
 package application.application.configuration;
 
 
+import application.application.service.authentication.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,22 +14,17 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
     @Bean
-    BCryptPasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, UserDetailsServiceImpl userDetailsServiceImpl) throws Exception {
         return httpSecurity
-                .formLogin(form -> {
-//                    form.defaultSuccessUrl(/)
-                })
-
-                .authorizeHttpRequests(auth ->
-                                auth.anyRequest().permitAll()
-                        )
-
+                .formLogin(form -> {})
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
+                .userDetailsService(userDetailsServiceImpl)
                 .csrf(csrf -> csrf.disable())
                 .build();
     }
