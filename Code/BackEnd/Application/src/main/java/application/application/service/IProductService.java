@@ -2,7 +2,6 @@ package application.application.service;
 
 import application.application.DTO.ProductDTO;
 import application.application.model.Product;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
