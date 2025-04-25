@@ -45,12 +45,29 @@
   text-decoration: none;
   color: var(--text-secondary);
   font-weight: 500;
-  transition: var(--transition-colors);
+  transition: color 0.3s ease;
   position: relative;
+  padding: 0.25rem 0;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+  border-radius: 2px;
 }
 
 .nav-link:hover {
   color: var(--primary-color);
+}
+
+.nav-link:hover::after {
+  width: 100%;
 }
 
 .nav-link.active {
@@ -58,14 +75,8 @@
 }
 
 .nav-link.active::after {
-  content: "";
-  position: absolute;
-  bottom: -0.5rem;
-  left: 0;
   width: 100%;
-  height: 2px;
-  background-color: var(--primary-color);
-  border-radius: 2px;
+  opacity: 1;
 }
 
 .header-right {
@@ -84,7 +95,7 @@
   align-items: center;
   justify-content: center;
   color: var(--text-primary);
-  transition: var(--transition);
+  transition: all 0.3s ease;
   position: relative;
 }
 
