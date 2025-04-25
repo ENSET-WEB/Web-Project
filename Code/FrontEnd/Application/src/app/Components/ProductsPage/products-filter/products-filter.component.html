@@ -1,0 +1,94 @@
+<div class="filter-card">
+  <div class="filter-section">
+    <div class="section-header" (click)="toggleCategorySection()">
+      <h3>Categories</h3>
+      <button
+        class="toggle-button"
+        [class.expanded]="isCategoryExpanded"
+        aria-label="Toggle categories section"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+    </div>
+    <div class="category-wrapper" [class.expanded]="isCategoryExpanded">
+      <div class="category-content">
+        <div class="category-item" (click)="resetCategory()">
+          All Categories
+        </div>
+        <div
+          *ngFor="let category of categoryList"
+          class="category-item"
+          [class.active]="filterOptions.category?.id === category.id"
+          (click)="onCategoryChange(category)"
+        >
+          {{ category.name }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="filter-section">
+    <div class="section-header" (click)="togglePriceSection()">
+      <h3>Price Range</h3>
+      <button
+        class="toggle-button"
+        [class.expanded]="isPriceExpanded"
+        aria-label="Toggle price range section"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+    </div>
+    <div class="price-wrapper" [class.expanded]="isPriceExpanded">
+      <div class="price-content">
+        <div class="price-inputs">
+          <div class="input-group">
+            <label for="minPrice">Min ($)</label>
+            <input
+              type="number"
+              id="minPrice"
+              min="0"
+              [(ngModel)]="filterOptions.minPrice"
+              (ngModelChange)="onFilterChange()"
+            />
+          </div>
+          <div class="input-group">
+            <label for="maxPrice">Max ($)</label>
+            <input
+              type="number"
+              id="maxPrice"
+              min="0"
+              [(ngModel)]="filterOptions.maxPrice"
+              (ngModelChange)="onFilterChange()"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="reset-button" (click)="resetFilters()">Reset Filters</button>
+</div>

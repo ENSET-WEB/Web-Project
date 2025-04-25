@@ -1,0 +1,26 @@
+<div class="products-container">
+  <div class="products-layout">
+    <aside class="products-sidebar">
+      <app-products-filter
+        [categoryList]="categoryList"
+        (filterChange)="retrieveFilterOptions($event)"
+      ></app-products-filter>
+    </aside>
+    <main class="products-main">
+      <div class="products-search">
+        <input
+          type="text"
+          placeholder="Search products..."
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="applyFilterOptions()"
+        />
+      </div>
+      <div class="product-list">
+        <app-product-card
+          *ngFor="let product of filteredProducts"
+          [product]="product"
+        ></app-product-card>
+      </div>
+    </main>
+  </div>
+</div>

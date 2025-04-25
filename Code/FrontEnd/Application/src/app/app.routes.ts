@@ -1,13 +1,19 @@
 import { Routes } from '@angular/router';
-import { MainComponent } from './Components/main/main.component';
+import { ProductsComponent } from './Components/ProductsPage/products/products.component';
+import { ProductDetailsComponent } from './Components/ProductsPage/product-details/product-details.component';
+
 export const routes: Routes = [
   {
-    path: 'main',
-    component: MainComponent,
+    path: 'products',
+    component: ProductsComponent,
+  },
+  {
+    path: 'products/:id',
+    component: ProductDetailsComponent,
   },
   {
     path: '',
-    redirectTo: 'main',
+    redirectTo: 'products',
     pathMatch: 'full',
   },
 ];
