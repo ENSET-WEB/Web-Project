@@ -87,12 +87,24 @@
 .price-content {
   min-height: 0;
   padding-top: 0.5rem;
+  overflow: hidden;
 }
 
 .category-content {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.category-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.category-content {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .category-item {
@@ -198,20 +210,24 @@
   font-size: 0.9rem;
   letter-spacing: 0.025em;
   transition: var(--transition);
-  margin-top: 0.5rem;
 }
 
 .reset-button:hover {
   background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+.reset-button:active {
+  transform: translateY(0);
 }
 
 @media (max-width: 768px) {
   .filter-card {
-    padding: 1.5rem;
+    padding: 1.25rem;
   }
 
   .filter-section {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
 
   .category-item {
@@ -219,6 +235,6 @@
   }
 
   .input-group input {
-    padding: 0.625rem 0.875rem;
+    padding: 0.5rem;
   }
 }
