@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ThemeService } from '../../Core/Services/theme.service';
+import { ThemeService } from '../../Core/services/theme.service';
 
 @Component({
   selector: 'app-header',

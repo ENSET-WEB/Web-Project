@@ -39,7 +39,8 @@ public class CartServiceImpl implements ICartService {
 
     @Override
     public CartDTO addProductToAppUserCartById(String appUserID, Product product, Integer quantity) {
-        AppUser appUser = appUserRepository.findById(appUserID).orElseThrow(() -> new RuntimeException("User Not Found"));
+        AppUser appUser = appUserRepository.findById(appUserID)
+                .orElseThrow(() -> new RuntimeException("User Not Found"));
         return addProductToAppUserCart(appUser, product, quantity);
     }
 
@@ -50,7 +51,8 @@ public class CartServiceImpl implements ICartService {
 
     @Override
     public CartDTO addProductToAppUserCartById(String appUserID, String productId, Integer quantity) {
-        Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product Not Found"));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product Not Found"));
         return addProductToAppUserCartById(appUserID, product, quantity);
     }
 
@@ -61,7 +63,8 @@ public class CartServiceImpl implements ICartService {
 
         // Verifying if the product doesn't already exist
         cartItemRepository.getCartItemsByCart(cart).forEach(cartItem -> {
-            if (cartItem.getProduct().equals(product)) throw new RuntimeException("Product already exists");
+            if (cartItem.getProduct().equals(product))
+                throw new RuntimeException("Product already exists");
         });
 
         CartItem cartItem = CartItem.builder()
@@ -109,9 +112,15 @@ public class CartServiceImpl implements ICartService {
 
     @Override
     public CartDTO getCartDTOByAppUserId(String appUserId) {
-        AppUser appUser = appUserRepository.findById(appUserId).orElseThrow(() -> new RuntimeException("User Not Found"));
+        AppUser appUser = appUserRepository.findById(appUserId)
+                .orElseThrow(() -> new RuntimeException("User Not Found"));
         return getCartDTOByAppUser(appUser);
     }
 
+    @Override
+    public CartDTO getCartById(String cartId) {
+        Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new RuntimeException("Cart Not Found"));
+        return cartMapper.cartToDTO(cart);
+    }
 
 }

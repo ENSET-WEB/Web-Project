@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IProduct } from '../../../Core/Interface/iproduct';
-import { ProductService } from '../../../Core/Services/product.service';
+import { ProductService } from '../../../Core/services/product.service';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ProductCardComponent } from '../product-card/product-card.component';
@@ -9,7 +9,7 @@ import { ProductsFilterComponent } from '../products-filter/products-filter.comp
 import { IFilterOptions } from '../../../Core/Interface/ifilter-options';
 import { FormsModule } from '@angular/forms';
 import { ICategory } from '../../../Core/Interface/icategory';
-import { CategoryService } from '../../../Core/Services/category.service';
+import { CategoryService } from '../../../Core/services/category.service';
 
 @Component({
   selector: 'app-products',

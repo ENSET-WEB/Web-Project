@@ -1,0 +1,41 @@
+<div class="user-profile-container">
+  <!-- <div class="profile-header">
+    <div class="profile-image-container">
+      <img
+        [src]="user.profileImage"
+        [alt]="user.username"
+        class="profile-image"
+      />
+      <button class="change-photo-btn">Change Photo</button>
+    </div>
+    <h1 class="welcome-text">Welcome, {{ user.firstName || "User" }}!</h1>
+  </div> -->
+
+  <div class="profile-content">
+    <form class="profile-form" (ngSubmit)="onUpdateProfile()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          [(ngModel)]="user.username"
+          placeholder="Enter username"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="user.email"
+          placeholder="Enter email"
+        />
+      </div>
+
+      <button type="submit" class="update-profile-btn">Update Profile</button>
+    </form>
+  </div>
+</div>

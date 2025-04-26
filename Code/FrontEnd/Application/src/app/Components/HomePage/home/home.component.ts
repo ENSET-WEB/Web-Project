@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ProductService } from '../../../Core/Services/product.service';
+import { ProductService } from '../../../Core/services/product.service';
 import { IProduct } from '../../../Core/Interface/iproduct';
 import { ProductCardComponent } from '../../ProductsPage/product-card/product-card.component';
-import { CategoryService } from '../../../Core/Services/category.service';
+import { CategoryService } from '../../../Core/services/category.service';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ICategory } from '../../../Core/Interface/icategory';

@@ -3,7 +3,7 @@ package application.application.controller.others;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
+// @Controller
 public class FallBackController {
     @RequestMapping("/**")
     public String fallBack() {

@@ -11,7 +11,9 @@ public interface ICartService {
     CartDTO addProductToAppUserCart(AppUser appUser, Product product, Integer quantity);
 
     CartDTO addProductToAppUserCartById(String appUserID, Product product, Integer quantity);
+
     CartDTO addProductToAppUserCartById(String appUserID, ProductDTO productDTO, Integer quantity);
+
     CartDTO addProductToAppUserCartById(String appUserID, String productId, Integer quantity);
 
     CartItem addProductToCart(Cart cart, Product product, Integer quantity);
@@ -27,4 +29,6 @@ public interface ICartService {
     CartDTO getCartDTOByAppUser(AppUser appUser);
 
     CartDTO getCartDTOByAppUserId(String appUserId);
+
+    CartDTO getCartById(String cartId);
 }

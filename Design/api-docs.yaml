@@ -1,0 +1,327 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /cart/updateCartItem:
+    put:
+      tags:
+      - cart-controller
+      operationId: updateProductFromAppUserCart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CartItemDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CartItemDTO"
+  /cart/addCartITem:
+    post:
+      tags:
+      - cart-controller
+      operationId: addProductToAppUserCart
+      parameters:
+      - name: appUserId
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: productId
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: quantity
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CartDTO"
+  /appUser/add:
+    post:
+      tags:
+      - app-user-controller
+      operationId: createAppUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppUserDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AppUserDTO"
+  /product:
+    get:
+      tags:
+      - product-controller
+      operationId: getAllProducts
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ProductDTO"
+  /product/{id}:
+    get:
+      tags:
+      - product-controller
+      operationId: getProductById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ProductDTO"
+  /category:
+    get:
+      tags:
+      - category-controller
+      operationId: getAllCategories
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CategoryDTO"
+  /category/{id}:
+    get:
+      tags:
+      - category-controller
+      operationId: getCategoryById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CategoryDTO"
+  /cart/{appUserId}:
+    get:
+      tags:
+      - cart-controller
+      operationId: getCartByAppUserId
+      parameters:
+      - name: appUserId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CartDTO"
+  /appUser:
+    get:
+      tags:
+      - app-user-controller
+      operationId: getAllAppUser
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AppUserDTO"
+  /appUser/{id}:
+    get:
+      tags:
+      - app-user-controller
+      operationId: getAppUserById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AppUserDTO"
+  /cart/deleteCartItem:
+    delete:
+      tags:
+      - cart-controller
+      operationId: deleteProductFromAppUserCart
+      parameters:
+      - name: cartItemId
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CartItem"
+components:
+  schemas:
+    CartItemDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        productDTO:
+          $ref: "#/components/schemas/ProductDTO"
+    ProductDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: double
+        imageUrl:
+          type: string
+        categoryName:
+          type: string
+    AppRole:
+      type: object
+      properties:
+        id:
+          type: string
+        roleName:
+          type: string
+    AppUser:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        appRole:
+          type: array
+          items:
+            $ref: "#/components/schemas/AppRole"
+    Cart:
+      type: object
+      properties:
+        id:
+          type: string
+        appUser:
+          $ref: "#/components/schemas/AppUser"
+    CartDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        appUser:
+          $ref: "#/components/schemas/AppUser"
+        cartItemList:
+          type: array
+          items:
+            $ref: "#/components/schemas/CartItem"
+    CartItem:
+      type: object
+      properties:
+        id:
+          type: string
+        product:
+          $ref: "#/components/schemas/Product"
+        quantity:
+          type: integer
+          format: int32
+        cart:
+          $ref: "#/components/schemas/Cart"
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: double
+        imageUrl:
+          type: string
+        category:
+          $ref: "#/components/schemas/Category"
+    AppUserDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+    CategoryDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
