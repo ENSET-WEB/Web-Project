@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { IProduct } from '../../../Core/Interface/iproduct';
-import { ProductService } from '../../../Core/Services/product.service';
+import { IProduct } from '../../../Core/interface/iproduct';
+import { ProductService } from '../../../Core/services/product.service';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { ProductCardComponent } from '../product-card/product-card.component';
 import { CommonModule } from '@angular/common';
-import { ProductsFilterComponent } from '../products-filter/products-filter.component';
-import { IFilterOptions } from '../../../Core/Interface/ifilter-options';
+import { IFilterOptions } from '../../../Core/interface/ifilter-options';
 import { FormsModule } from '@angular/forms';
-import { ICategory } from '../../../Core/Interface/icategory';
-import { CategoryService } from '../../../Core/Services/category.service';
+import { CategoryService } from '../../../Core/services/category.service';
+import { ProductCardComponent } from '../product-card/product-card.component';
+import { ProductsFilterComponent } from '../products-filter/products-filter.component';
+import { ICategory } from '../../../Core/interface/icategory';
 
 @Component({
   selector: 'app-products',

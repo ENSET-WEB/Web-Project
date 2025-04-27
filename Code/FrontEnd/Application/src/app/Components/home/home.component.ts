@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ProductService } from '../../../Core/Services/product.service';
-import { IProduct } from '../../../Core/Interface/iproduct';
-import { ProductCardComponent } from '../../ProductsPage/product-card/product-card.component';
-import { CategoryService } from '../../../Core/Services/category.service';
-import { catchError } from 'rxjs/operators';
+import { ProductCardComponent } from '../ProductsPage/product-card/product-card.component';
+import { ProductService } from '../../Core/services/product.service';
+import { IProduct } from '../../Core/interface/iproduct';
+import { ICategory } from '../../Core/interface/icategory';
 import { of } from 'rxjs';
-import { ICategory } from '../../../Core/Interface/icategory';
+import { catchError } from 'rxjs/operators';
+import { CategoryService } from '../../Core/services/category.service';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +19,7 @@ import { ICategory } from '../../../Core/Interface/icategory';
 export class HomeComponent implements OnInit {
   featuredProducts: IProduct[] = [];
   categories: ICategory[] = [];
+  error: string | null = null;
 
   constructor(
     private productService: ProductService,
@@ -34,18 +35,18 @@ export class HomeComponent implements OnInit {
     this.categoryService
       .getCategoryList()
       .pipe(
-        catchError((error) => {
+        catchError((error: any) => {
           console.error('Error loading categories:', error);
           return of([]);
         })
       )
-      .subscribe((categories) => {
+      .subscribe((categories: ICategory[]) => {
         this.categories = categories;
       });
   }
 
   private loadFeaturedProducts(): void {
-    this.productService.fetchProductList().subscribe((products) => {
+    this.productService.fetchProductList().subscribe((products: IProduct[]) => {
       this.featuredProducts = products.slice(0, 4);
     });
   }

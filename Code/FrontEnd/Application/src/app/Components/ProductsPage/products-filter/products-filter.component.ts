@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IFilterOptions } from '../../../Core/Interface/ifilter-options';
-import { ICategory } from '../../../Core/Interface/icategory';
+import { IFilterOptions } from '../../../Core/interface/ifilter-options';
+import { ICategory } from '../../../Core/interface/icategory';
 
 @Component({
   selector: 'app-products-filter',

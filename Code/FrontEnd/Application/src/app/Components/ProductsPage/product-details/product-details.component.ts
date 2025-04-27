@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { ProductService } from '../../../Core/Services/product.service';
-import { IProduct } from '../../../Core/Interface/iproduct';
+import { ProductService } from '../../../Core/services/product.service';
+import { IProduct } from '../../../Core/interface/iproduct';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
 

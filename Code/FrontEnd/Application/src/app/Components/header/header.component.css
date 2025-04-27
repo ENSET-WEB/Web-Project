@@ -143,3 +143,16 @@
     gap: 0.5rem;
   }
 }
+/* .icon-button.logout-button:hover {
+  color: var(--error-color);
+  background-color: var(--error-light);
+}
+
+.icon-button.login-button {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.icon-button.login-button:hover {
+  background-color: var(--primary-color-light);
+} */

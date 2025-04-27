@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IProduct } from '../../../Core/Interface/iproduct';
+import { IProduct } from '../../../Core/interface/iproduct';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 

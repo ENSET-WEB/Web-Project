@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ThemeService } from '../../Core/Services/theme.service';
+import { ThemeService } from '../../Core/services/theme.service';
+import { AuthService } from '../../Core/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -11,9 +12,16 @@ import { ThemeService } from '../../Core/Services/theme.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
-  constructor(public themeService: ThemeService) {}
+  constructor(
+    public themeService: ThemeService,
+    public authService: AuthService
+  ) {}
 
   toggleTheme(): void {
     this.themeService.toggleTheme();
+  }
+
+  handleLogout(): void {
+    this.authService.logout();
   }
 }
