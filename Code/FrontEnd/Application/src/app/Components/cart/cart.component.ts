@@ -16,12 +16,12 @@ import { catchError, finalize, of } from 'rxjs';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  appUser: IAppUser | null = null;
+  //   appUser: IAppUser | null = null;
   cart: ICart | null = null;
-  cartItems: ICartItem[] = [];
   cartTotal: number | undefined = 0;
   isLoading: boolean = true;
   error: string | null = null;
+  deletedCartItem: ICartItem | null = null;
 
   constructor(
     private cartService: CartService,
@@ -29,14 +29,14 @@ export class CartComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.appUser = this.authService.getUserInfo();
-    if (!this.appUser) {
-      console.warn('No user info found');
-      this.error = 'Please log in to view your cart';
-      this.isLoading = false;
-      return;
-    }
-    console.log('User ID:', this.appUser.id);
+    // this.appUser = this.authService.getUserInfo();
+    // if (!this.appUser) {
+    //   console.warn('No user info found');
+    //   this.error = 'Please log in to view your cart';
+    //   this.isLoading = false;
+    //   return;
+    // }
+    // console.log('User ID:', this.appUser.id);
     this.loadCart();
   }
 
@@ -45,7 +45,7 @@ export class CartComponent implements OnInit {
     this.error = null;
 
     this.cartService
-      .getCartItemByAppUserId(this.appUser!.id)
+      .getCartByAppUserId()
       .pipe(
         catchError((error) => {
           console.error('Error: ', error);
@@ -72,20 +72,39 @@ export class CartComponent implements OnInit {
   updateQuantity(item: ICartItem, event: Event): void {
     console.log('Update Item');
 
-      const input = event.target as HTMLInputElement;
-      const newQuantity = parseInt(input.value);
-      if (!isNaN(newQuantity)) {
-        this.cartService.updateQuantity(item.id, newQuantity);
-      }
+    const input = event.target as HTMLInputElement;
+    const newQuantity = parseInt(input.value);
+    if (!isNaN(newQuantity)) {
+      this.cartService.updateQuantity(item.id, newQuantity);
+    }
   }
 
-  removeItem(cartItemId: string): void {
+  removeCartItemFromCart(cartItemId: string): void {
     console.log('DELETE Item');
-      this.cartService.removeFromCart(cartItemId);
+    this.cartService
+      .removeCartItemFromCart(cartItemId)
+      .pipe(
+        catchError((error) => {
+          console.error('Error DELETING cartItem', error);
+          return of();
+        })
+      )
+      .subscribe((cartItem: ICartItem) => {
+        if (cartItem) {
+          this.deletedCartItem = cartItem;
+        }
+      });
+  }
+
+  handleRemoveCartItemFromCart(cartItemId: string): void {
+    this.removeCartItemFromCart(cartItemId);
+    this.cart!.cartItemDTOList = this.cart!.cartItemDTOList.filter(
+      (cartItem) => cartItem.id !== cartItemId
+    );
   }
 
   clearCart(): void {
     console.log('CLEAR cart');
-      this.cartService.clearCart();
+    this.cartService.clearCart();
   }
 }

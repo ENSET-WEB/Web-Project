@@ -47,7 +47,10 @@
         <div class="item-total">
           ${{ item.productDTO.price * item.quantity }}
         </div>
-        <button class="remove-item" (click)="removeItem(item.id)">
+        <button
+          class="remove-item"
+          (click)="handleRemoveCartItemFromCart(item.id)"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -98,7 +101,7 @@
       </svg>
       <h2>Your cart is empty</h2>
       <p>Looks like you haven't added any items to your cart yet.</p>
-      <button routerLink="/productDTOs" class="continue-shopping-btn">
+      <button routerLink="/products" class="continue-shopping-btn">
         Continue Shopping
       </button>
     </div>

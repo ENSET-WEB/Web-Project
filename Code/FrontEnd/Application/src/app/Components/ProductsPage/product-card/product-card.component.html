@@ -1,13 +1,31 @@
-<div class="product-card" [routerLink]="['/products', product.id]">
-  <div class="product-image">
-    <img [src]="product.imageUrl" [alt]="product.name" />
+<!-- Product Card Container -->
+<div class="product-card">
+  <!-- Clickable area for product details -->
+  <div class="product-details-link" [routerLink]="['/products', product.id]">
+    <div class="product-image">
+      <img
+        [src]="product.imageUrl"
+        [alt]="product.name"
+        [title]="product.name"
+      />
+    </div>
+    <div class="product-info">
+      <div class="product-header">
+        <h3 class="product-name">{{ product.name }}</h3>
+        <span class="product-category">{{ product.categoryName }}</span>
+      </div>
+      <div class="price-container">
+        <span class="product-price">
+          <span class="currency">$</span>{{ product.price }}
+        </span>
+      </div>
+    </div>
   </div>
-  <div class="product-info">
-    <h3 class="product-name">{{ product.name }}</h3>
-    <span class="product-category">{{ product.categoryName }}</span>
-    <div class="product-price">${{ product.price }}</div>
-    <button class="add-to-cart-btn" (click)="$event.stopPropagation()">
-      Add to Cart
+  <!-- Separate action area -->
+  <div class="product-actions">
+    <button class="add-to-cart-btn" (click)="handleAddProductToAppUserCart()">
+      <span class="btn-text">Add to Cart</span>
+      <i class="cart-icon">🛒</i>
     </button>
   </div>
 </div>
