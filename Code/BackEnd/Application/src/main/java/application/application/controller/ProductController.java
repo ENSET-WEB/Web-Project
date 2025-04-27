@@ -5,6 +5,7 @@ import application.application.service.IProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,23 +19,27 @@ public class ProductController {
     private IProductService productService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
         List<ProductDTO> products = productService.getAllProductsDTO();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<ProductDTO> getProductById(@PathVariable String id) {
         ProductDTO product = productService.getProductDTOById(id);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
     @PostMapping("/addProduct")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO) {
         return new ResponseEntity<>(productService.addProduct(productDTO), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/deleteProduct")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ProductDTO> deleteProduct(@RequestParam String productId) {
         return new ResponseEntity<>(productService.deleteProductById(productId), HttpStatus.OK);
     }

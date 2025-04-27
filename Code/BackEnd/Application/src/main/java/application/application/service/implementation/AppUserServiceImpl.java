@@ -10,6 +10,7 @@ import application.application.repository.AppUserRepository;
 import application.application.repository.CartRepository;
 import application.application.service.IAppUserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AppUserServiceImpl implements IAppUserService {
 
+    private BCryptPasswordEncoder passwordEncoder;
     private AppUserRepository appUserRepository;
     private AppRoleRepository appRoleRepository;
     private CartRepository cartRepository;
@@ -60,7 +62,7 @@ public class AppUserServiceImpl implements IAppUserService {
         if (appUserRepository.findByName(name) != null) throw new RuntimeException("User already exist");
 
 //        Important: Add Password encryption
-        AppUser appUser = AppUser.builder().name(name).password(password).email(email).build();
+        AppUser appUser = AppUser.builder().name(name).password(passwordEncoder.encode(password)).email(email).build();
 
 //        Warning: Later check the existence of the roles before adding them to User
         AppRole userRole = appRoleRepository.findByRoleName("USER");

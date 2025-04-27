@@ -6,13 +6,12 @@ import application.application.service.IAppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
     private IAppUserService appUserService;
 
     @Override
@@ -25,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return User.builder()
                 .username(username)
                 .password(appUser.getPassword())
-                .roles(appUserRoles)
+                .authorities(appUserRoles)
                 .build();
     }
 }
