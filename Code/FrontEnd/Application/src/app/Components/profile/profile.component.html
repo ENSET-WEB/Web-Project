@@ -23,14 +23,14 @@
     <div class="profile-content">
       <div class="info-group">
         <label>Username</label>
-        <p>{{ userInfo?.username }}</p>
+        <p>{{ userInfo?.name }}</p>
       </div>
 
       <div class="info-group">
         <label>Roles</label>
         <div class="roles-list">
-          <span class="role-badge" *ngFor="let role of userInfo?.authorities">
-            {{ getFormattedRole(role) }}
+          <span class="role-badge" *ngFor="let role of userInfo?.appRoles">
+            {{ getFormattedRole(role.appRoleName) }}
           </span>
         </div>
       </div>

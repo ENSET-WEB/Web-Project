@@ -78,6 +78,7 @@
           class="icon-button cart-button"
           title="Shopping cart"
           aria-label="Shopping cart"
+          routerLink="/cart"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -101,9 +102,7 @@
         <button
           routerLink="/profile"
           class="icon-button profile-button"
-          [title]="
-            'Logged in as ' + (authService.getUserInfo()?.username || '')
-          "
+          [title]="'Logged in as ' + (authService.getUserInfo()?.name || '')"
           aria-label="User profile"
         >
           <svg

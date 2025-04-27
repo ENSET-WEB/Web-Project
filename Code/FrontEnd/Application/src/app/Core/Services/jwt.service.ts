@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
+import { IAppUser } from '../interface/iapp-user';
 
 interface DecodedToken {
+  subId: string;
   sub: string;
   exp: number;
   iat: number;
   authorities: string;
+  email: string;
 }
 
 @Injectable({
@@ -47,19 +50,6 @@ export class JwtService {
     }
   }
 
-  getTokenExpirationTime(): number | null {
-    const token = this.getToken();
-    if (!token) return null;
-
-    try {
-      const decoded = this.decodeToken(token);
-      return decoded?.exp || null;
-    } catch (error) {
-      console.error('Error getting token expiration time:', error);
-      return null;
-    }
-  }
-
   isTokenExpired(): boolean {
     const token = this.getToken();
     if (!token) return true;
@@ -76,7 +66,7 @@ export class JwtService {
     }
   }
 
-  getUserInfo(): { username: string; authorities: string[] } | null {
+  getUserInfo(): IAppUser | null {
     const token = this.getToken();
     if (!token) return null;
 
@@ -85,8 +75,12 @@ export class JwtService {
       if (!decoded) return null;
 
       return {
-        username: decoded.sub,
-        authorities: decoded.authorities.split(' '),
+        id: decoded.subId,
+        name: decoded.sub,
+        email: decoded.email,
+        appRoles: decoded.authorities
+          .split(' ')
+          .map((auth) => ({ id: auth, appRoleName: auth })),
       };
     } catch (error) {
       console.error('Error getting user info:', error);

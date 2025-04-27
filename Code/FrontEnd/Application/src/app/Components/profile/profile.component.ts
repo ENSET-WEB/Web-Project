@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../Core/services/auth.service';
 import { FormsModule } from '@angular/forms';
+import { IAppUser } from '../../Core/interface/iapp-user';
 
 @Component({
   selector: 'app-profile',
@@ -12,15 +13,13 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
-  userInfo: {
-    username: string;
-    authorities: string[];
-  } | null = null;
+  userInfo: IAppUser | null = null;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
     this.userInfo = this.authService.getUserInfo();
+    console.log(this.userInfo);
   }
 
   getFormattedRole(role: string): string {

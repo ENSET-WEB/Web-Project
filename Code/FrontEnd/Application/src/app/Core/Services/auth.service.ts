@@ -27,10 +27,9 @@ export class AuthService {
   }
 
   public login(username: string, password: string): Observable<any> {
-    // If there's an existing token, remove it before attempting new login
     this.jwtService.removeToken();
 
-    let options = {
+    const options = {
       headers: new HttpHeaders().set(
         'Content-Type',
         'application/x-www-form-urlencoded'
@@ -56,7 +55,7 @@ export class AuthService {
     console.log('User Logged out: ', this.getUserInfo());
 
     this.jwtService.removeToken();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   public isAuthenticated(): boolean {
