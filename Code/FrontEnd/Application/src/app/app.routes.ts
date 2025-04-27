@@ -3,6 +3,7 @@ import { ProductsComponent } from './components/ProductsPage/products/products.c
 import { ProductDetailsComponent } from './components/ProductsPage/product-details/product-details.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/auth/login/login.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { AuthGuard } from './Core/guards/auth.guard';
 
 export const routes: Routes = [
@@ -13,7 +14,11 @@ export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    // canActivate: [AuthGuard],
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'products',

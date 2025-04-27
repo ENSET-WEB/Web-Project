@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './Components/header/header.component';
-import { FooterComponent } from './Components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { AuthService } from './Core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,12 @@ import { FooterComponent } from './Components/footer/footer.component';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'RockShope';
+  constructor(private authService: AuthService) {}
+  ngOnInit(): void {
+    console.log('Welcome to RockShop');
+    // this.authService.logout();
+    // this.authService.isAuthenticated();
+  }
 }

@@ -108,7 +108,7 @@
 }
 
 .product-price::before {
-  content: "$";
+  /* content: "$"; */
   font-size: 0.85em;
   font-weight: 600;
   color: var(--text-secondary);

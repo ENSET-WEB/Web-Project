@@ -16,9 +16,20 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private jwtService: JwtService
-  ) {}
+  ) {
+    this.validateAuthenticationState();
+  }
+
+  private validateAuthenticationState(): void {
+    if (this.jwtService.isTokenExpired()) {
+      this.logout();
+    }
+  }
 
   public login(username: string, password: string): Observable<any> {
+    // If there's an existing token, remove it before attempting new login
+    this.jwtService.removeToken();
+
     let options = {
       headers: new HttpHeaders().set(
         'Content-Type',

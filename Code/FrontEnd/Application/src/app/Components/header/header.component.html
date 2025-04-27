@@ -99,6 +99,7 @@
           <span class="cart-count">0</span>
         </button>
         <button
+          routerLink="/profile"
           class="icon-button profile-button"
           [title]="
             'Logged in as ' + (authService.getUserInfo()?.username || '')
