@@ -19,16 +19,14 @@ public class ProductController {
     private IProductService productService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
         List<ProductDTO> products = productService.getAllProductsDTO();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('USER')")
-    public ResponseEntity<ProductDTO> getProductById(@PathVariable String id) {
-        ProductDTO product = productService.getProductDTOById(id);
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable String productId) {
+        ProductDTO product = productService.getProductDTOById(productId);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 

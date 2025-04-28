@@ -1,5 +1,7 @@
 package application.application.configuration.Security;
 
+import application.application.model.AppUser;
+import application.application.service.IAppUserService;
 import lombok.AllArgsConstructor;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/auth")
 @AllArgsConstructor
 public class SecurityController {
+    private final IAppUserService iAppUserService;
     private AuthenticationManager authenticationManager;
     private JwtEncoder jwtEncoder;
 
@@ -33,16 +36,15 @@ public class SecurityController {
     @PostMapping("/login")
     public Map<String, String> login(String username, String password) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        System.out.println(authentication.getPrincipal());
-        System.out.println(authentication.getCredentials());
-        System.out.println(authentication.getAuthorities());
-        System.out.println(authentication.getDetails());
         String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(" "));
+        AppUser appUser = iAppUserService.getAppUserByName(username);
         Instant instant = Instant.now();
         JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder()
                 .issuedAt(instant)
-                .expiresAt(instant.plus(1, ChronoUnit.MINUTES))
+                .expiresAt(instant.plus(10, ChronoUnit.MINUTES))
                 .subject(username)
+                .claim("subId", appUser.getId())
+                .claim("email", appUser.getEmail())
                 .claim("authorities", authorities)
                 .build();
 

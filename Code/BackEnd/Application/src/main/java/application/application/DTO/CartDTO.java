@@ -15,6 +15,6 @@ import java.util.List;
 @Builder
 public class CartDTO {
     private String id;
-    private AppUser appUser;
+//    private AppUser appUser;
     private List<CartItemDTO> cartItemDTOList;
 }

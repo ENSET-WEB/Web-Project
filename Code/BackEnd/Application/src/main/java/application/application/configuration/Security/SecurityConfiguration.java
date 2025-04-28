@@ -58,7 +58,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/login/**").permitAll()
 //                        .requestMatchers("/category/**").hasRole("ADMIN")
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll()
+                )
                 .httpBasic(Customizer.withDefaults())
                 .userDetailsService(userDetailsService)
                 .csrf(AbstractHttpConfigurer::disable)

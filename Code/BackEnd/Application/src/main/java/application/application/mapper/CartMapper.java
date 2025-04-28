@@ -25,7 +25,7 @@ public class CartMapper {
     public CartDTO cartToDTO(Cart cart, List<CartItem> cartItemList) {
         return CartDTO.builder()
                 .id(cart.getId())
-                .appUser(cart.getAppUser())
+//                .appUser(cart.getAppUser())
                 .cartItemDTOList(cartItemMapper.cartItemListToCartItemDTOList(cartItemList))
                 .build();
     }
@@ -33,7 +33,7 @@ public class CartMapper {
     public CartDTO cartToDTO(Cart cart) {
         return CartDTO.builder()
                 .id(cart.getId())
-                .appUser(cart.getAppUser())
+//                .appUser(cart.getAppUser())
                 .cartItemDTOList(cartItemMapper.cartItemListToCartItemDTOList(cartItemRepository.getCartItemsByCart_Id(cart.getId())))
                 .build();
     }

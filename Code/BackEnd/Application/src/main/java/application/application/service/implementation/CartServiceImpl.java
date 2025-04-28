@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @AllArgsConstructor
@@ -59,17 +60,27 @@ public class CartServiceImpl implements ICartService {
         productRepository.findById(product.getId()).orElseThrow(() -> new RuntimeException("Product does not exist"));
         cartRepository.findById(cart.getId()).orElseThrow(() -> new RuntimeException("Cart does not exist"));
 
+        AtomicReference<Boolean> alreadyExists = new AtomicReference<>(false);
+        AtomicReference<CartItem> existingCartItem = new AtomicReference<>(null);
         // Verifying if the product doesn't already exist
         cartItemRepository.getCartItemsByCart(cart).forEach(cartItem -> {
-            if (cartItem.getProduct().equals(product)) throw new RuntimeException("Product already exists");
+            if (cartItem.getProduct().equals(product)) {
+                alreadyExists.set(true);
+                existingCartItem.set(cartItem);
+            }
         });
 
-        CartItem cartItem = CartItem.builder()
-                .product(product)
-                .quantity((quantity == 0) ? 1 : quantity)
-                .cart(cart).build();
+        if (!alreadyExists.get()) {
+            CartItem cartItem = CartItem.builder()
+                    .product(product)
+                    .quantity((quantity == 0) ? 1 : quantity)
+                    .cart(cart).build();
 
-        return cartItemRepository.save(cartItem);
+            return cartItemRepository.save(cartItem);
+        }
+
+        existingCartItem.get().setQuantity(existingCartItem.get().getQuantity() + quantity);
+        return cartItemRepository.save(existingCartItem.get());
     }
 
     @Override
