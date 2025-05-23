@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵRuntimeError } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ProductService } from '../../../Core/services/product.service';
 import { IProduct } from '../../../Core/interface/iproduct';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { CartService } from '../../../Core/services/cart.service';
 
 @Component({
   selector: 'app-product-details',
@@ -14,13 +15,14 @@ import { of } from 'rxjs';
   styleUrl: './product-details.component.css',
 })
 export class ProductDetailsComponent implements OnInit {
-  product: IProduct | undefined;
+  product: IProduct | null = null;
   isLoading = true;
   error: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -28,6 +30,24 @@ export class ProductDetailsComponent implements OnInit {
     if (productId) {
       this.loadProduct(productId);
     }
+  }
+
+  handleAddProductToAppUserCart() {
+    console.log('Adding...');
+
+    if (!this.product) throw console.log('Product inexistent');
+
+    this.cartService
+      .addProductToUserCart(this.product.id)
+      .pipe(
+        catchError((err) => {
+          console.error('Error adding product to cart: ', err, this.product);
+          return of();
+        })
+      )
+      .subscribe((cart) => {
+        console.log('Product added to cart successfully', cart);
+      });
   }
 
   private loadProduct(productId: string): void {
@@ -38,7 +58,7 @@ export class ProductDetailsComponent implements OnInit {
           this.error = 'Failed to load product details';
           this.isLoading = false;
           console.error('Error loading product:', error);
-          return of(undefined);
+          return of(null);
         }),
         finalize(() => {
           this.isLoading = false;

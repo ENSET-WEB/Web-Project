@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { ICartItem } from '../interface/icart-item';
@@ -25,7 +25,10 @@ export class CartService {
   }
 
   getUserInfo() {
-    this.appUser = this.authService.getUserInfo();
+    const appUser = this.authService.getUserInfo();
+    if (appUser !== null) {
+      this.appUser = appUser
+    }
   }
 
   private updateCartSize() {
@@ -44,11 +47,13 @@ export class CartService {
   }
 
   getCartByAppUserId(): Observable<ICart> {
-    return this.http.get<ICart>(`${this.cartUrl}/${this.appUser!.id}`);
+    return this.http.get<ICart>(`${this.cartUrl}/${this.appUser?.id}`);
   }
 
   getCartSize(): Observable<number> {
-    return this.http.get<number>(`${this.cartUrl}/${this.appUser!.id}/size`);
+    console.log(`${this.cartUrl}/${this.appUser?.id}/size`);
+
+    return this.http.get<number>(`${this.cartUrl}/${this.appUser?.id}/size`);
   }
 
   updateQuantity(id: string, newQuantity: number) {

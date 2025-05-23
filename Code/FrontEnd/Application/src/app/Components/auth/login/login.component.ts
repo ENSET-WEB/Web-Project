@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../Core/services/auth.service';
 import { catchError, finalize, of } from 'rxjs';
+import { IAppUser } from '../../../Core/interface/iapp-user';
 
 @Component({
   selector: 'app-login',
@@ -19,11 +20,16 @@ export class LoginComponent {
   };
   error: String = '';
   isLoading: boolean = false;
-
+  authSuccess: boolean = false;
+  userInfo: IAppUser | null = null;
   constructor(private authService: AuthService) {}
 
   handleLogin() {
     if (this.isLoading) return;
+    if (this.loginData.username === "" || this.loginData.password === "") {
+      this.error = "Please enter a username and password";
+      return;
+    }
 
     this.error = '';
     this.isLoading = true;
@@ -32,16 +38,19 @@ export class LoginComponent {
       .login(this.loginData.username, this.loginData.password)
       .pipe(
         catchError((error) => {
-          this.error = error.error?.message || 'An error occurred during login';
+          console.log(error);
+          this.error = "Invalid username or password";
           return of(null);
         }),
         finalize(() => {
           this.isLoading = false;
         }))
       .subscribe((response) => {
+        console.log(response);
         if (response) {
-          const userInfo = this.authService.getUserInfo();
-          console.log('Logged in user:', userInfo);
+          this.userInfo = this.authService.getUserInfo();
+          console.log('Logged in user:', this.userInfo);
+          this.authSuccess = true;
         }
       });
   }

@@ -15,7 +15,7 @@ import { catchError, of } from 'rxjs';
 export class ProductCardComponent {
   @Input() product!: IProduct;
   constructor(private cartService: CartService) {}
-  onclic = () => console.log('hello');
+
   handleAddProductToAppUserCart() {
     console.log('Adding...');
 

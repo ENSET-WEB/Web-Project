@@ -4,6 +4,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AuthService } from './Core/services/auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -13,15 +15,33 @@ import { ReactiveFormsModule } from '@angular/forms';
     HeaderComponent,
     FooterComponent,
     ReactiveFormsModule,
+    CommonModule
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'RockShope';
-  constructor(private authService: AuthService) {}
+  title = 'RockShop';
+  logoutConfirmation: boolean = false;
+  isAuthenticated: boolean = false;
+
+  constructor(public authService: AuthService) { }
+
   ngOnInit(): void {
-    console.log('Welcome to RockShop');
-    this.authService.isAuthenticated();
+    console.log('Welcome to RockShop!');
+    this.isAuthenticated = this.authService.isAuthenticated();
+    if (this.isAuthenticated) {
+      this.authService.logoutConfirmation$.subscribe((confirmation) => { this.logoutConfirmation = confirmation })
+    }
   }
+
+  cancelLogout() {
+    this.authService.confirmateLogout(false)
+  }
+
+  handleLogout() {
+    this.authService.logout()
+    this.logoutConfirmation = false
+  }
+
 }

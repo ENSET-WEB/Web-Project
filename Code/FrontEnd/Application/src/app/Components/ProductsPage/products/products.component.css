@@ -8,7 +8,7 @@
 .products-container {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 2.5rem;
+  padding: 1.5rem 2.5rem 2.5rem 2.5rem;
   background: var(--background-light);
   min-height: 100vh;
   transition: var(--transition-colors);
@@ -36,8 +36,8 @@
 
 .products-sidebar {
   position: sticky;
-  top: 2rem;
-  max-height: calc(100vh - 5rem);
+  top: calc(70px + 2rem);
+  max-height: calc(100vh - 5rem - 70px);
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) var(--background-light);
@@ -108,7 +108,7 @@
 }
 
 .products-search input {
-  width: 100%;
+  width: 150%;
   padding: 0.875rem 1.25rem 0.875rem 3rem;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);

@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ThemeService } from '../../Core/services/theme.service';
 import { AuthService } from '../../Core/services/auth.service';
-import { IAppUser } from '../../Core/interface/iapp-user';
 import { CartService } from '../../Core/services/cart.service';
 import { catchError, of, Subscription } from 'rxjs';
+import { IAppUser } from '../../Core/interface/iapp-user';
+import { IAppRole } from '../../Core/interface/iapp-role';
 
 @Component({
   selector: 'app-header',
@@ -16,18 +17,23 @@ import { catchError, of, Subscription } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
   cartSize: number = 0;
   private cartSizeSubscription?: Subscription;
+  // private isAdmin: boolean = false;
+  // private userInfo: IAppUser | null = null
 
   constructor(
     public themeService: ThemeService,
     public authService: AuthService,
     private cartService: CartService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.cartSizeSubscription = this.cartService.cartSize$.subscribe(
       (size) => (this.cartSize = size)
     );
-    this.getCartSize(); // Initial load
+    this.getCartSize();
+
+
+   
   }
 
   ngOnDestroy(): void {
@@ -55,6 +61,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   handleLogout(): void {
-    this.authService.logout();
+    this.authService.confirmateLogout(true)
   }
+
 }

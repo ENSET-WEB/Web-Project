@@ -7,11 +7,28 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AuthGuard } from './Core/guards/auth.guard';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { AuthenticatedGuard } from './Core/guards/authenticated.guard';
+import { RegistrationComponent } from './components/auth/registration/registration.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { ManageProductsComponent } from './components/admin/manage-products/manage-products.component';
+import { ManageUsersComponent } from './components/admin/manage-users/manage-users.component';
+import { AdminGuard } from './Core/guards/admin.guard';
 
 export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [AuthenticatedGuard],
+  },
+  {
+    path: 'register',
+    component: RegistrationComponent,
+    canActivate: [AuthenticatedGuard],
+  },
+  {
+    path: 'changePassword',
+    component: ChangePasswordComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: '',
@@ -40,4 +57,15 @@ export const routes: Routes = [
     component: CheckoutComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'admin/manageProducts',
+    component: ManageProductsComponent,
+    canActivate:[AdminGuard]
+  },
+  {
+    path: 'admin/manageUsers',
+    component: ManageUsersComponent,
+    canActivate:[AdminGuard]
+
+  }
 ];

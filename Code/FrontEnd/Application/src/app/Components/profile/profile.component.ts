@@ -14,12 +14,15 @@ import { IAppUser } from '../../Core/interface/iapp-user';
 })
 export class ProfileComponent implements OnInit {
   userInfo: IAppUser | null = null;
+  isAdmin: boolean = false
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
     this.userInfo = this.authService.getUserInfo();
     console.log(this.userInfo);
+
+    this.isAdmin = this.authService.isAdmin()
   }
 
   getFormattedRole(role: string): string {

@@ -43,7 +43,10 @@
         <div class="product-price">${{ product.price }}</div>
 
         <div class="product-actions">
-          <button class="add-to-cart-btn">
+          <button
+            class="add-to-cart-btn"
+            (click)="handleAddProductToAppUserCart(); $event.stopPropagation()"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"

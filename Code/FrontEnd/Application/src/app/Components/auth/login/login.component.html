@@ -74,7 +74,17 @@
         >
       </div>
 
-      <button type="submit" class="login-button">Sign In</button>
+      <button type="submit" class="login-button" [disabled]="isLoading">
+        {{ isLoading ? 'Signing in...' : 'Sign In' }}
+      </button>
+
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+
+      <div *ngIf="authSuccess" class="success-message">
+        Login successful as {{ userInfo?.name }}
+      </div>
 
       <div class="signup-prompt">
         Don't have an account? <a routerLink="/register">Sign up</a>

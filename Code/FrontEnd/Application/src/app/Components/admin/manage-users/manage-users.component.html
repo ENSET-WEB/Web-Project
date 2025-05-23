@@ -1,0 +1,129 @@
+<div class="manage-users-container">
+    <div class="manage-users-layout">
+        <div class="manage-users-header">
+            <h1 class="manage-users-title">Manage Users</h1>
+            <div class="manage-users-actions">
+                <div class="users-search">
+                    <input type="text" placeholder="Search users..." [(ngModel)]="searchQuery"
+                        (ngModelChange)="applyFilterOptions()">
+                </div>
+                <button class="add-user-button" (click)="openAddModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <h5>
+                        Add New User
+                    </h5>
+                </button>
+            </div>
+        </div>
+
+        <div class="messages" *ngIf="errorMessage || successMessage">
+            <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+            <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
+        </div>
+
+        <div class="users-table-container">
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users">
+                        <td>{{ user.id }}</td>
+                        <td>
+                            {{ user.name }}
+                            {{user.id === appUserInfo?.id  ? "(YOU)" : ""}}
+                        </td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            <p>{{user.appRoles}}</p>
+                        </td>
+                        <td>
+                            <span class="status-badge">
+                                ACTIVE
+                            </span>
+                        </td>
+                        <td class="action-buttons">
+                            <button class="action-button edit" (click)="openEditModal(user)" title="Edit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg>
+                            </button>
+                            <button class="action-button delete" (click)="deleteUser(user.id)" title="Delete">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path
+                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                    </path>
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="modal" *ngIf="showAddModal || showEditModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>{{ showEditModal ? 'Edit User' : 'Add New User' }}</h2>
+                <button class="close-button" (click)="closeModal()">×</button>
+            </div>
+
+            <form [formGroup]="userForm" class="user-form">
+                <div class="form-group">
+                    <label for="name">Username</label>
+                    <input type="text" id="name" formControlName="name" placeholder="Enter username">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" formControlName="email" placeholder="Enter email">
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <select id="role" formControlName="role">
+                        <option value="">Select Role</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status" formControlName="status">
+                        <option value="">Select Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="cancel-button" (click)="closeModal()">Cancel</button>
+                    <button type="submit" class="submit-button" [disabled]="isLoading">
+                        <span *ngIf="!isLoading">{{ showEditModal ? 'Update' : 'Add' }} User</span>
+                        <span *ngIf="isLoading" class="loading-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
