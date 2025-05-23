@@ -39,27 +39,29 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
-//        return new InMemoryUserDetailsManager(
-//                User.builder().username("USER").password(passwordEncoder().encode("USER")).roles("USER").build(),
-//                User.builder().username("ADMIN").password(passwordEncoder().encode("ADMIN")).roles("USER", "ADMIN").build());
-//    }
-
+    // @Bean
+    // public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
+    // return new InMemoryUserDetailsManager(
+    // User.builder().username("USER").password(passwordEncoder().encode("USER")).roles("USER").build(),
+    // User.builder().username("ADMIN").password(passwordEncoder().encode("ADMIN")).roles("USER",
+    // "ADMIN").build());
+    // }
 
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity httpSecurity,
-
             UserDetailsService userDetailsService) throws Exception {
         return httpSecurity
                 .sessionManagement(sm -> sm
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/login/**").permitAll()
-//                        .requestMatchers("/category/**").hasRole("ADMIN")
-                        .anyRequest().permitAll()
-                )
+                        .requestMatchers("/appUser/addAppUser").permitAll()
+                        .requestMatchers("/appUser/changePassword").permitAll()
+                        .requestMatchers("/category/**").permitAll()
+                        .requestMatchers("/product/**").permitAll()
+                        .anyRequest().authenticated())
+
                 .httpBasic(Customizer.withDefaults())
                 .userDetailsService(userDetailsService)
                 .csrf(AbstractHttpConfigurer::disable)
@@ -98,4 +100,5 @@ public class SecurityConfiguration {
         converter.setJwtGrantedAuthoritiesConverter(authoritiesConverter);
         return converter;
     }
+
 }

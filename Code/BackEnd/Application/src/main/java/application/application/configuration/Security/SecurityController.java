@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/auth")
 @AllArgsConstructor
 public class SecurityController {
-    private final IAppUserService iAppUserService;
+    private final IAppUserService appUserService;
     private AuthenticationManager authenticationManager;
     private JwtEncoder jwtEncoder;
 
@@ -37,7 +38,7 @@ public class SecurityController {
     public Map<String, String> login(String username, String password) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(" "));
-        AppUser appUser = iAppUserService.getAppUserByName(username);
+        AppUser appUser = appUserService.getAppUserByName(username);
         Instant instant = Instant.now();
         JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder()
                 .issuedAt(instant)
