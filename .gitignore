@@ -1,2 +1,7 @@
 .vscode
 .idea
+# *.png
+*.tex
+*.aux
+*.gz
+*.mp4
