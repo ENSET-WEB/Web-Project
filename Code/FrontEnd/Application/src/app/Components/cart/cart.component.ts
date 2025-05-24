@@ -77,6 +77,7 @@ export class CartComponent implements OnInit {
     if (!isNaN(newQuantity)) {
       this.cartService.updateQuantity(item.id, newQuantity);
     }
+    this.calculateTotal();
   }
 
   removeCartItemFromCart(cartItemId: string): void {
@@ -94,6 +95,7 @@ export class CartComponent implements OnInit {
           this.deletedCartItem = cartItem;
         }
       });
+    this.calculateTotal();
   }
 
   handleRemoveCartItemFromCart(cartItemId: string): void {
@@ -101,6 +103,7 @@ export class CartComponent implements OnInit {
     this.cart!.cartItemDTOList = this.cart!.cartItemDTOList.filter(
       (cartItem) => cartItem.id !== cartItemId
     );
+    this.calculateTotal();
   }
 
   clearCart(): void {
